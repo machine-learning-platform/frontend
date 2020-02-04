@@ -1,13 +1,20 @@
 import React from "react";
-import { FormGroup, FormLabel, FormControl, Button } from "@material-ui/core";
+import { FormGroup, FormLabel, Button } from "@material-ui/core";
+import CSVReader from "react-csv-reader";
+import "./DataSubmission.css";
 
-function DataSubmission() {
+export default function DataSubmission() {
   return (
     <div className="data-submission-container">
       <div className="data-submission">
         <FormGroup controlId="file">
           <FormLabel>Submit your data</FormLabel>
-          <input type="file" style={{ display: "none" }} id="fileInput" />
+
+          <CSVReader
+            id="fileInput"
+            style={{ display: "none" }}
+            onFileLoaded={data => console.log(data)}
+          />
           <Button onClick={onClick}>Submit</Button>
         </FormGroup>
       </div>
@@ -15,6 +22,5 @@ function DataSubmission() {
   );
 }
 
-const onClick = () => document.getElementById("fileInput").click();
-
-export default DataSubmission;
+// const onChange = files => console.log(files);
+const onClick = () => document.getElementsByClassName("csv-input")[0].click();
