@@ -1,11 +1,13 @@
 import React from "react";
 import "./App.css";
-import DataSubmission from "./components/DataSubmission";
+import DataImport from "./components/DataImport";
+import DataDisplay from "./components/DataDisplay";
 
 function App() {
   return (
     <div className="App">
-      <DataSubmission />
+      <DataImport />
+      <DataDisplay />
     </div>
   );
 }
