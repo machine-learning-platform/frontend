@@ -26,6 +26,7 @@ function DataImport(props) {
   const [data, setData] = useState([]);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [openSetColumnNames, setOpenSetColumnNames] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [columnNames, setColumnNames] = useState([]);
   return (
     <div className="data-import-container">
@@ -41,9 +42,10 @@ function DataImport(props) {
             }}
           />
           <Button
-            onClick={() =>
-              document.getElementsByClassName("csv-input")[0].click()
-            }
+            onClick={() => {
+              if (props.columns.length) setOpenDelete(true);
+              else document.getElementsByClassName("csv-input")[0].click();
+            }}
             color={"primary"}
           >
             Submit
@@ -149,14 +151,47 @@ function DataImport(props) {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <Dialog open={openDelete}>
+          <DialogTitle>Confirmation</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to discard the data that you are currently
+              working with?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setOpenDelete(false);
+                props.setColumns([]);
+                props.setRows([]);
+                document.getElementsByClassName("csv-input")[0].click();
+              }}
+            >
+              Yes
+            </Button>
+            <Button
+              onClick={() => {
+                setOpenDelete(false);
+              }}
+            >
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  columns: state.columns
+});
 
 const mapDispatchToProps = dispatch => ({
   setColumns: columns => dispatch(setColumns(columns)),
   setRows: rows => dispatch(setRows(rows))
 });
 
-export default connect(null, mapDispatchToProps)(DataImport);
+export default connect(mapStateToProps, mapDispatchToProps)(DataImport);
