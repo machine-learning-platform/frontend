@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import json2csv from "json2csv";
+import axios from "axios";
 import { connect } from "react-redux";
 import {
   FormGroup,
@@ -42,8 +43,12 @@ function Regression(props) {
     setIV(newIV);
   };
   const handleSubmit = () => {
-    console.log(DV);
-    console.log(IV);
+    axios.post("/regression", {
+      DV: props.columns[DV],
+      IV: props.columns.filter((value, index) => IV[index]),
+      columns: props.columns,
+      rows: props.rows
+    });
   };
   return (
     <div className="regression-container">
