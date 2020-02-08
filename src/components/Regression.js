@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import json2csv from "json2csv";
 import axios from "axios";
 import { connect } from "react-redux";
+import _ from "lodash";
 import {
   FormGroup,
   FormLabel,
@@ -30,6 +31,12 @@ import {
 function Regression(props) {
   const [DV, setDV] = useState(0);
   const [IV, setIV] = useState(props.columns.map(() => false));
+  // Used to display the result of regression.
+  const [DVName, setDVName] = useState("");
+  const [IVNames, setIVNames] = useState([]);
+  const [score, setScore] = useState(0);
+  const [coefficients, setCoefficients] = useState([]);
+  const [intercept, setIntercept] = useState(0);
   const handleDVChange = e => {
     const index = e.target.value;
     const newIV = IV.concat();
@@ -43,12 +50,21 @@ function Regression(props) {
     setIV(newIV);
   };
   const handleSubmit = () => {
-    axios.post("/regression", {
-      DV: props.columns[DV],
-      IV: props.columns.filter((value, index) => IV[index]),
-      y: props.rows.map(row => row[DV]),
-      X: props.rows.map(row => row.filter((value, index) => IV[index]))
-    });
+    setDVName(props.columns[DV]);
+    setIVNames(props.columns.filter((value, index) => IV[index]));
+    axios
+      .post("/regression", {
+        y: props.rows.map(row => Number(row[DV])),
+        X: props.rows.map(row =>
+          row.map(Number).filter((value, index) => IV[index])
+        )
+      })
+      .then(response => {
+        console.log(response.data);
+        setScore(response.data["score"]);
+        setCoefficients(response.data["coefficients"]);
+        setIntercept(response.data["intercept"]);
+      });
   };
   return (
     <div className="regression-container">
@@ -84,6 +100,16 @@ function Regression(props) {
           </FormGroup>
         </FormControl>
         <Button onClick={handleSubmit}>Submit</Button>
+        {coefficients.length ? (
+          <div>
+            {DVName +
+              "=" +
+              _.zip(coefficients, IVNames)
+                .map(item => item.join(" * "))
+                .join(" + ") +
+              intercept}
+          </div>
+        ) : null}
       </div>
     </div>
   );
