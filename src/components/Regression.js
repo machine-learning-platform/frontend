@@ -46,8 +46,8 @@ function Regression(props) {
     axios.post("/regression", {
       DV: props.columns[DV],
       IV: props.columns.filter((value, index) => IV[index]),
-      columns: props.columns,
-      rows: props.rows
+      y: props.rows.map(row => row[DV]),
+      X: props.rows.map(row => row.filter((value, index) => IV[index]))
     });
   };
   return (
