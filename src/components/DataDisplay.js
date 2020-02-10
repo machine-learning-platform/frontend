@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Paper,
   TableContainer,
@@ -6,15 +6,33 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody
+  TableBody,
+  TextField,
+  Typography,
+  Button
 } from "@material-ui/core";
-// import { setColumns, setRows } from "../redux/actions";
+import { setColumns, setRows, setFileName } from "../redux/actions";
 import { connect } from "react-redux";
+import "./DataDisplay.css";
 
 function DataDisplay(props) {
+  const [name, setName] = useState(props.fileName);
   return (
     <div className="data-display-container">
       <div className="data-display">
+        <div className="title-container">
+          <TextField
+            label="File Name:"
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
+          <br />
+          <Button color="primary" onClick={() => props.setFileName(name)}>
+            Change
+          </Button>
+          <br />
+        </div>
+        <br />
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -42,7 +60,14 @@ function DataDisplay(props) {
 
 const mapStateToProps = state => ({
   columns: state.columns,
-  rows: state.rows
+  rows: state.rows,
+  fileName: state.fileName
 });
 
-export default connect(mapStateToProps)(DataDisplay);
+const mapDispatchToProps = dispatch => ({
+  setColumns: columns => dispatch(setColumns(columns)),
+  setRows: rows => dispatch(setRows(rows)),
+  setFileName: fileName => dispatch(setFileName(fileName))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DataDisplay);

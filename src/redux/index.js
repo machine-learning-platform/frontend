@@ -2,7 +2,8 @@ import { createStore } from "redux";
 
 const initialState = {
   columns: [],
-  rows: []
+  rows: [],
+  fileName: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +18,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         rows: action.payload
+      };
+    }
+    case "SET_FILE_NAME": {
+      return {
+        ...state,
+        fileName: action.payload
       };
     }
     default: {

@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 import CSVReader from "react-csv-reader";
 import "./DataImport.css";
-import { setColumns, setRows } from "../redux/actions";
+import { setColumns, setRows, setFileName } from "../redux/actions";
 import { connect } from "react-redux";
 
 function DataImport(props) {
@@ -39,12 +39,18 @@ function DataImport(props) {
             onFileLoaded={data => {
               setOpenConfirmation(true);
               setData(data);
+              props.setFileName("My Data");
             }}
           />
           <Button
             onClick={() => {
               if (props.columns.length) setOpenDelete(true);
-              else document.getElementsByClassName("csv-input")[0].click();
+              else {
+                const csvInput = document.getElementsByClassName(
+                  "csv-input"
+                )[0];
+                csvInput.click();
+              }
             }}
             color={"primary"}
           >
@@ -191,7 +197,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setColumns: columns => dispatch(setColumns(columns)),
-  setRows: rows => dispatch(setRows(rows))
+  setRows: rows => dispatch(setRows(rows)),
+  setFileName: fileName => dispatch(setFileName(fileName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataImport);
