@@ -32,7 +32,6 @@ function DataImport(props) {
     <div className="data-import-container">
       <div className="data-import">
         <FormGroup controlId="file">
-          <FormLabel>Submit your data</FormLabel>
           <CSVReader
             id="fileInput"
             style={{ display: "none" }}
@@ -42,20 +41,22 @@ function DataImport(props) {
               props.setFileName("My Data");
             }}
           />
-          <Button
-            onClick={() => {
-              if (props.columns.length) setOpenDelete(true);
-              else {
-                const csvInput = document.getElementsByClassName(
-                  "csv-input"
-                )[0];
-                csvInput.click();
-              }
-            }}
-            color={"primary"}
-          >
-            Submit
-          </Button>
+          <div className="button-container">
+            <Button
+              onClick={() => {
+                if (props.columns.length) setOpenDelete(true);
+                else {
+                  const csvInput = document.getElementsByClassName(
+                    "csv-input"
+                  )[0];
+                  csvInput.click();
+                }
+              }}
+              color="primary"
+            >
+              Submit your data
+            </Button>
+          </div>
         </FormGroup>
         <Dialog open={openConfirmation}>
           <DialogTitle>Confirmation</DialogTitle>
@@ -81,6 +82,7 @@ function DataImport(props) {
           </DialogContent>
           <DialogActions>
             <Button
+              color="primary"
               onClick={() => {
                 setOpenConfirmation(false);
                 props.setColumns(data[0]);

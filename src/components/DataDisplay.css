@@ -3,7 +3,8 @@
 } */
 
 button.delete {
-  width: 30px;
+  width: 24px;
+  padding: 0px;
   min-width: 10px;
   display: inline-block;
 }
@@ -11,3 +12,11 @@ button.delete {
 /* span.index {
   display: inline-block;
 } */
+
+div.button-container {
+  float: right;
+}
+
+div.text-container {
+  float: left;
+}
