@@ -14,13 +14,14 @@ import {
 import { setColumns, setRows, setFileName } from "../redux/actions";
 import { connect } from "react-redux";
 import "./DataDisplay.css";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function DataDisplay(props) {
   const [name, setName] = useState(props.fileName);
   return (
     <div className="data-display-container">
       <div className="data-display">
-        <div className="title-container">
+        {/* <div className="title-container">
           <TextField
             label="File Name:"
             value={name}
@@ -31,20 +32,35 @@ function DataDisplay(props) {
             Change
           </Button>
           <br />
-        </div>
+        </div> */}
         <br />
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>Index</TableCell>
                 {props.columns.map(item => (
                   <TableCell>{item}</TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.rows.map(row => (
+              {props.rows.map((row, index) => (
                 <TableRow>
+                  <TableCell>
+                    <span className="index">{index + 1}</span>
+                    <Button
+                      className="delete"
+                      onClick={() => {
+                        props.setRows([
+                          ...props.rows.slice(0, index),
+                          ...props.rows.slice(index + 1)
+                        ]);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  </TableCell>
                   {row.map(item => (
                     <TableCell>{item}</TableCell>
                   ))}
