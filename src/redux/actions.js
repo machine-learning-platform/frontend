@@ -12,3 +12,8 @@ export const setFileName = payload => ({
   type: "SET_FILE_NAME",
   payload
 });
+
+export const addColumn = payload => ({
+  type: "ADD_COLUMN",
+  payload
+});
