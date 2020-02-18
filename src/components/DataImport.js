@@ -86,7 +86,7 @@ function DataImport(props) {
               onClick={() => {
                 setOpenConfirmation(false);
                 props.setColumns(data[0]);
-                props.setRows(data.slice(1));
+                props.setRows(data.slice(1).filter(row => row.length > 0));
               }}
             >
               Yes

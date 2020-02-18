@@ -13,7 +13,7 @@ export const setFileName = payload => ({
   payload
 });
 
-export const addColumn = payload => ({
-  type: "ADD_COLUMN",
+export const addColumns = payload => ({
+  type: "ADD_COLUMNS",
   payload
 });

@@ -26,11 +26,14 @@ const reducer = (state = initialState, action) => {
         fileName: action.payload
       };
     }
-    case "ADD_COLUMN": {
+    case "ADD_COLUMNS": {
       return {
         ...state,
-        columns: [...state.columns, payload.column],
-        rows: state.rows.map((row, index) => [...row, payload.data[index]])
+        columns: [...state.columns, ...action.payload.columns],
+        rows: state.rows.map((row, index) => [
+          ...row,
+          ...action.payload.data[index]
+        ])
       };
     }
     default: {

@@ -84,6 +84,7 @@ function Regression(props) {
               </Select>
             </FormControl>
           </FormGroup>
+          <div>Independent Varialbe</div>
           <FormGroup row>
             {props.columns.map((item, index) => (
               <FormControlLabel

@@ -20,6 +20,7 @@ import { setColumns, setRows, setFileName } from "../redux/actions";
 import { connect } from "react-redux";
 import "./DataDisplay.css";
 import DeleteIcon from "@material-ui/icons/Delete";
+import DataEncoding from "./DataEncoding";
 
 function DataDisplay(props) {
   // const [name, setName] = useState(props.fileName);
@@ -45,6 +46,7 @@ function DataDisplay(props) {
   return (
     <div className="data-display-container">
       <div className="data-display">
+        <DataEncoding />
         {/* <div className="title-container">
           <TextField
             label="File Name:"
@@ -68,7 +70,7 @@ function DataDisplay(props) {
                     <div className="text-container">{item}</div>
                     <div className="button-container">
                       <Button
-                        className="delete"
+                        className="d elete"
                         onClick={() => {
                           setOpenDelete(true);
                           setDeletedIndex(index);
